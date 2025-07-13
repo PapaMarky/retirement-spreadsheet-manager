@@ -32,9 +32,9 @@ class YearSheet(BaseSheet):
         self._spreadsheet_id = spreadsheet_id
         self._quarter_columns: Optional[Dict[str, QuarterColumn]] = None
         self._investment_income_row: Optional[int] = None
-    
+
     @property
-    def _get_spreadsheet_id(self) -> str:
+    def spreadsheet_id(self) -> str:
         """Get the spreadsheet ID for this sheet."""
         return self._spreadsheet_id
     
