@@ -29,13 +29,14 @@ class YearSheet(BaseSheet):
             dry_run: If True, preview changes without applying
         """
         super().__init__(sheet_name, sheets_service, dry_run)
-        self.spreadsheet_id = spreadsheet_id
+        self._spreadsheet_id = spreadsheet_id
         self._quarter_columns: Optional[Dict[str, QuarterColumn]] = None
         self._investment_income_row: Optional[int] = None
     
+    @property
     def _get_spreadsheet_id(self) -> str:
         """Get the spreadsheet ID for this sheet."""
-        return self.spreadsheet_id
+        return self._spreadsheet_id
     
     def validate_structure(self) -> bool:
         """
