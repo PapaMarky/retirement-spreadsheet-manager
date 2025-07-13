@@ -67,6 +67,11 @@ Financial data is maintained in a Google Spreadsheet for trend analysis and grap
 3. Verify no sensitive data: `git diff --cached`
 4. Then commit with descriptive message
 
+### Syncing with Remote
+- **Always use `git fetch origin -p`** to prune deleted branches before pulling
+- **Then `git pull origin main`** to get latest changes
+- This keeps local branch list clean and removes branches deleted on GitHub
+
 ## Important Notes
 
 - This is personal financial data - handle with appropriate confidentiality
