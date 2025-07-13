@@ -43,6 +43,30 @@ Data is manually downloaded every 3-4 months following specific procedures docum
 
 Financial data is maintained in a Google Spreadsheet for trend analysis and graphing. The repository serves as the raw data storage location.
 
+## Git and Version Control Guidelines
+
+**CRITICAL**: This repository contains sensitive financial data and configuration files.
+
+### Git Add Rules
+- **NEVER use `git add .` or `git add --all`** - Always specify individual files
+- **Always specify exact file paths** when staging files for commit
+- **Review staged files** with `git status` before committing
+- **Check for sensitive data** before adding any new files
+
+### Files to NEVER Commit
+- `scripts/config.py` - Contains personal spreadsheet IDs and account numbers
+- `scripts/google_credentials.json` - Contains Google API credentials
+- `ASSETS.md` - Contains personal account information and procedures
+- `Claude-GoogleDocs-Setup.md` - Contains personal spreadsheet URLs
+- Any files in `Historical-Data/` - Contains actual financial statements
+- Any `.json` files that might contain credentials
+
+### Safe Git Workflow
+1. Use specific file paths: `git add scripts/new_feature.py`
+2. Review staged files: `git status`
+3. Verify no sensitive data: `git diff --cached`
+4. Then commit with descriptive message
+
 ## Important Notes
 
 - This is personal financial data - handle with appropriate confidentiality

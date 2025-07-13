@@ -107,16 +107,12 @@ class QuarterColumn:
         Get a unique key for this quarter.
         
         Returns:
-            String key like "Q1" or "Q4_2024" for previous year Q4
+            String key like "2024_Q4" or "2025_Q1" based on parsed header
         """
         if not self.is_valid:
             return f"INVALID_COL_{self.column_index}"
         
-        # For previous year Q4 in current year sheet, use special key
-        if hasattr(self, '_is_previous_year_q4') and self._is_previous_year_q4:
-            return f"Q4_{self.year}"
-        
-        return f"Q{self.quarter}"
+        return f"{self.year}_Q{self.quarter}"
     
     @property
     def column_letter(self) -> str:

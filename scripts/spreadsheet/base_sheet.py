@@ -133,7 +133,7 @@ class BaseSheet(ABC):
             ).execute()
             
             # Invalidate cached data since we modified the sheet
-            self._sheet_data = None
+            self.clear_cache()
             
             return True
             
@@ -180,7 +180,7 @@ class BaseSheet(ABC):
             ).execute()
             
             # Invalidate cached data since we modified the sheet
-            self._sheet_data = None
+            self.clear_cache()
             
             print(f"✅ Updated {len(updates)} ranges in {self.sheet_name}")
             return True
