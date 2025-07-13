@@ -1,0 +1,30 @@
+# Configuration Template
+# Copy this file to config.py and fill in your actual values
+
+# Google Spreadsheet Configuration
+SPREADSHEET_ID = "your_spreadsheet_id_here"
+
+# Account ID to Name Mappings (these should be extracted from QFX files in future)
+ACCOUNT_MAPPINGS = {
+    'account_id_1': 'Account Name 1',
+    'account_id_2': 'Account Name 2', 
+    'account_id_3': 'Account Name 3',
+    'account_id_4': 'Account Name 4',
+    'account_id_5': 'Account Name 5',
+}
+
+# Tax Treatment by Account (these should be determined automatically in future)
+ACCOUNT_TAX_TREATMENT = {
+    'account_id_1': 'Tax-Free',      # Roth IRA
+    'account_id_2': 'Tax-Free',      # Roth IRA
+    'account_id_3': 'Tax-Deferred', # Traditional IRA  
+    'account_id_4': 'Tax-Deferred', # Traditional IRA
+    'account_id_5': 'Taxed-Now',    # Brokerage (unless municipal bonds)
+}
+
+# CUSIP to Fund Name Mappings (these should be extracted from QFX files in future)
+CUSIP_MAPPINGS = {
+    'cusip_1': 'Fund Name 1',
+    'cusip_2': 'Fund Name 2',
+    # Add more as needed
+}
