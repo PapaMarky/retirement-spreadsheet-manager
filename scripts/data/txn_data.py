@@ -28,6 +28,7 @@ class TxnData:
         self._transactions: List[Dict] = []
         self._source_files: Set[str] = set()
         self._duplicate_count = 0
+        self._transaction_signatures: Set[tuple] = set()
     
     def add_qfx_file(self, qfx_file: QFXDataFile) -> int:
         """
@@ -43,8 +44,10 @@ class TxnData:
         added_count = 0
         
         for transaction in new_transactions:
-            if not self._is_duplicate(transaction):
+            signature = self._create_signature(transaction)
+            if signature not in self._transaction_signatures:
                 self._transactions.append(transaction)
+                self._transaction_signatures.add(signature)
                 added_count += 1
             else:
                 self._duplicate_count += 1
@@ -78,21 +81,20 @@ class TxnData:
         
         return results
     
-    def _is_duplicate(self, transaction: Dict) -> bool:
+    def _create_signature(self, transaction: Dict) -> tuple:
         """
-        Check if a transaction is a duplicate using content-based matching.
+        Create a content-based signature for duplicate detection.
         
         Uses account + posted + amount + name + memo + type for comparison,
         ignoring fitid which can be inconsistent across downloads.
         
         Args:
-            transaction: Transaction dictionary to check
+            transaction: Transaction dictionary
             
         Returns:
-            True if transaction is a duplicate, False otherwise
+            Tuple signature for hash-based duplicate detection
         """
-        # Create content signature (excluding fitid and other variable fields)
-        signature = (
+        return (
             transaction.get('account', ''),
             transaction.get('posted', ''),
             transaction.get('amount', 0.0),
@@ -100,22 +102,6 @@ class TxnData:
             transaction.get('memo', ''),
             transaction.get('type', '')
         )
-        
-        # Check against existing transactions
-        for existing_txn in self._transactions:
-            existing_signature = (
-                existing_txn.get('account', ''),
-                existing_txn.get('posted', ''),
-                existing_txn.get('amount', 0.0),
-                existing_txn.get('name', ''),
-                existing_txn.get('memo', ''),
-                existing_txn.get('type', '')
-            )
-            
-            if signature == existing_signature:
-                return True
-        
-        return False
     
     def get_all_transactions(self) -> List[Dict]:
         """
@@ -190,7 +176,7 @@ class TxnData:
         end_month, end_day = quarter_ends[quarter]
         
         start_date = datetime(year, start_month, start_day)
-        end_date = datetime(year, end_month, end_day)
+        end_date = datetime(year, end_month, end_day, 23, 59, 59)
         
         return self.get_date_range_transactions(start_date, end_date)
     
@@ -227,6 +213,7 @@ class TxnData:
         """Clear all transactions and reset the repository."""
         self._transactions.clear()
         self._source_files.clear()
+        self._transaction_signatures.clear()
         self._duplicate_count = 0
     
     def __len__(self) -> int:
